@@ -29,9 +29,23 @@ exports.cake_detail = function(req, res) {
 }; 
  
 // Handle Costume create on POST. 
-exports.cake_create_post = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Cake create POST'); 
+// Handle Costume create on POST. 
+exports.cake_create_post = async function(req, res) { 
+    console.log(req.body) 
+    let document = new Cake(); 
+    document.flavour = req.body.flavour; 
+    document.price = req.body.price; 
+    document.shape = req.body.shape; 
+    try{ 
+        let result = await document.save(); 
+        res.send(result); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
+
  
 // Handle Costume delete form on DELETE. 
 exports.cake_delete = function(req, res) { 
