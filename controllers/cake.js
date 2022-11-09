@@ -1,8 +1,26 @@
 var Cake = require('../models/cake'); 
- 
 // List of all Costumes 
-exports.cake_list = function(req, res) { 
-    res.send('NOT IMPLEMENTED: Cake list'); 
+exports.cake_list = async function(req, res) { 
+    try{ 
+        theCakes = await Cake.find(); 
+        res.send(theCakes); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
+//VIEWS 
+// Handle a show all view 
+exports.cake_view_all_Page = async function(req, res) { 
+    try{ 
+        theCakes = await Cake.find(); 
+        res.render('cake', { title: 'Cake Search Results', results: theCakes }); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
 }; 
  
 // for a specific Costume. 

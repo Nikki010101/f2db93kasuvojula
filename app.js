@@ -4,21 +4,24 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Cake = require("./models/cake");
-require('dotenv').config(); 
-const connectionString =  
-process.env.MONGO_CON 
-mongoose = require('mongoose'); 
-mongoose.connect(connectionString,  
-{useNewUrlParser: true, 
-useUnifiedTopology: true}); 
+require('dotenv').config();
+const connectionString =
+  process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 
 //Get the default connection 
 var db = mongoose.connection;
 
 //Bind connection to error event  
-db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
-db.once("open", function(){ 
-  console.log("Connection to DB succeeded")}); 
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function () {
+  console.log("Connection to DB succeeded")
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -38,19 +41,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/index', indexRouter);
+app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/cake', cakeRouter);
 app.use('/gridbuild', gridbuildRouter);
 app.use('/selector', selectorRouter);
 app.use('/resource', resourceRouter);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -60,30 +63,30 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 // We can seed the collection if needed on server start 
-async function recreateDB(){ 
+async function recreateDB() {
   // Delete everything 
-  await Cake.deleteMany(); 
- 
-  let instance1 = new 
-Cake({flavor: "vanilla", price: 40, shape: "round"});
-let instance2 = new 
-Cake({flavor: "pineapple", price: 30, shape: "heart"});
-let instance3 = new 
-Cake({flavor: "chocolate", price: 50, shape: "square"}); 
-  instance1.save( function(err,doc) { 
-      if(err) return console.error(err); 
-      console.log("First object saved") 
-  }); 
-  instance2.save( function(err,doc) { 
-    if(err) return console.error(err); 
-    console.log("Second object saved") 
-}); 
-instance3.save( function(err,doc) { 
-  if(err) return console.error(err); 
-  console.log("Third object saved") 
-}); 
-} 
- 
-let reseed = true; 
-if (reseed) { recreateDB();} 
+  await Cake.deleteMany();
+
+  let instance1 = new
+    Cake({ flavour: "vanilla", price: 40, shape: "round" });
+  let instance2 = new
+    Cake({ flavour: "pineapple", price: 30, shape: "heart" });
+  let instance3 = new
+    Cake({ flavour: "chocolate", price: 50, shape: "square" });
+  instance1.save(function (err, doc) {
+    if (err) return console.error(err);
+    console.log("First object saved")
+  });
+  instance2.save(function (err, doc) {
+    if (err) return console.error(err);
+    console.log("Second object saved")
+  });
+  instance3.save(function (err, doc) {
+    if (err) return console.error(err);
+    console.log("Third object saved")
+  });
+}
+
+let reseed = true;
+if (reseed) { recreateDB(); }
 module.exports = app;
