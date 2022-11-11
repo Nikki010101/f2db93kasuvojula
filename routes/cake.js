@@ -12,4 +12,7 @@ const cake_controlers= require('../controllers/cake');
 var router = express.Router(); 
  /* GET costumes */ 
 router.get('/', cake_controlers.cake_view_all_Page ); 
-module.exports = router; 
+//module.exports = router; 
+// GET request for one costume. 
+//router.get('/cake/:id', cake_controlers.cake_detail); 
+module.exports = router;
