@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let cakeid = toShow._id 
+  - let flavour = toShow.flavour 
+  - let price = toShow.price
+  - let shape = toShow.shape 
+  div 
+    div.row 
+      div(class='cakeAttr mr-3') cake ID is: 
+      div #{cakeid} 
+    div.row 
+      div(class='cakeAttr mr-3') cake flavour is: 
+      div #{flavour} 
+    div.row 
+      div(class='cakeAttr mr-3') cake price is: 
+      div #{price} 
+    div.row 
+      div(class='cakeAttr mr-3') cake shape is: 
+      div #{shape} 
