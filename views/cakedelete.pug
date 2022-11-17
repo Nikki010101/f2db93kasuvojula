@@ -3,41 +3,52 @@ extends layout
 block content 
   h1= title 
  
-  - let cakeid = toShow._id 
-  - let flavour = toShow.flavour 
-  - let price = toShow.price 
-  - let shape = toShow.shape 
-   
-  div.row(class='mb-2') 
-    div.mr-1 ID is 
-    div #{cakeid} 
-  - let actionid = "/resource/cake/" + cakeid 
-  form(id='CakeForm', action= actionid, method="DELETE") 
-    div.form-group 
-        label.cakeAttr(for='flavour') Cake flavour
-        input#flavour(type='text', name='flavour', value= flavour ) 
-    div.form-group 
-        label.cakeAttr(for='price') Cake price
-        input#price(type='number', name='price', value= price ) 
-    div.form-group 
-        label.cakeAttr(for='shape') Cake shape
-        input#shape(type='text', name='shape', value= shape ) 
-    input(type="submit") 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let cakeid = toShow._id 
+    - let flavour = toShow.flavour 
+    - let price = toShow.price 
+    - let shape = toShow.shape 
+    - let actionid = "/resource/cake/" + cakeid 
+    script let actionid = "#{actionid}" 
+    div 
+      div.row 
+        div(class='cakeAttr mr-3') Cake ID is: 
+        div #{cakeid} 
+      div.row 
+        div(class='cakeAttr mr-3') Cake flavour is: 
+        div #{flavour} 
+      div.row 
+        div(class='cakeAttr mr-3') Cake price is: 
+        div #{price} 
+      div.row 
+        div(class='cakeAttr mr-3') Cake shape is: 
+        div #{shape} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
  
   script. 
-    document.forms['CakeForm'].addEventListener('submit', (event) => { 
-      event.preventDefault(); 
-      // TODO do something here to show user that form is being submitted 
-      fetch(event.target.action, { 
-        method: 'DELETE', 
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+    function cancel() { 
+      // Go back to the home page for the costume collection 
+      window.location.href='/cake' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'      
+        
       }).then((resp) => { 
         return resp.json(); // or resp.text() or whatever the server sends 
       }).then((body) => { 
-        alert("delete succeded") 
+        alert("Delete succeded") 
+        window.location.href='/cake' 
         // TODO handle body 
       }).catch((error) => { 
         // TODO handle error 
-        alert("delete failed " + error ) 
+        alert("Delete failed " + error ) 
       }); 
-    }); 
+    } 

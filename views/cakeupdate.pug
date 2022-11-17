@@ -2,7 +2,9 @@ extends layout
  
 block content 
   h1= title 
- 
+  if (toShow == null) 
+    h2 No instance to update 
+  else 
   form(id='CakeForm', action="/resource/cake", method="PUT") 
     div.form-group 
         label.cakeAttr(for='flavour') Cake flavour 
