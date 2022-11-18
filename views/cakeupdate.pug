@@ -2,35 +2,45 @@ extends layout
  
 block content 
   h1= title 
+
   if (toShow == null) 
     h2 No instance to update 
   else 
-  form(id='CakeForm', action="/resource/cake", method="PUT") 
-    div.form-group 
-        label.cakeAttr(for='flavour') Cake flavour 
-        input#flavour(type='text', name='flavour') 
-    div.form-group 
-        label.cakeAttr(for='price') Cake price 
-        input#price(type='number', name='price') 
-    div.form-group 
-        label.cakeAttr(for='shape') Cake shape 
-        input#shape(type='text', name='shape') 
-    input(type="submit") 
+   - let _id = toShow._id
+   - let flavour = toShow.flavour
+   - let price = toShow.price
+   - let shape = toShow.shape
  
-  script. 
-    document.forms['CakeForm'].addEventListener('submit', (event) => { 
-      event.preventDefault(); 
-      // TODO do something here to show user that form is being submitted 
-      fetch(event.target.action, { 
-        method: 'POST', 
+   div.row(class='mb-2') 
+     div.mr-1 ID is 
+     div #{_id} 
+   - let actionid = "/resource/cake/" + _id
+   form(id='cakeForm', action=actionid, method="PUT") 
+     div.form-group 
+         label.cakeAttr(for='flavour') cake flavour 
+         input#flavour(type='text', name='flavour', value=flavour) 
+     div.form-group 
+         label.cakeAttr(for='price') cake price 
+         input#price(type='number', name='price',value=price) 
+     div.form-group 
+         label.cakeAttr(for='shape') cake shape
+         input#shape(type='text', name='shape', value=shape) 
+     input(type="submit") 
+ 
+   script. 
+     document.forms['CakeForm'].addEventListener('submit', (event) => { 
+       event.preventDefault(); 
+       // TODO do something here to show user that form is being submitted 
+       fetch(event.target.action, { 
+         method: 'PUT', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
-      }).then((resp) => { 
-        return resp.json(); // or resp.text() or whatever the server sends 
-      }).then((body) => { 
-        alert("Save succeded") 
-        // TODO handle body 
-      }).catch((error) => { 
+       }).then((resp) => { 
+         return resp.json();  // resp.json();  or whatever the server sends 
+       }).then((body) => { 
+         alert("Update succeded") 
+         // TODO handle body 
+       }).catch((error) => { 
         // TODO handle error 
-        alert("Save failed " + error ) 
-      }); 
-    }); 
+         alert("Update failed " + error ) 
+       }); 
+     }); 

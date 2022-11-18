@@ -15,20 +15,20 @@ block content
         input#shape(type='text', name='shape') 
     input(type="submit") 
  
-  script. 
-    document.forms['CakeForm'].addEventListener('submit', (event) => { 
-      event.preventDefault(); 
-      // TODO do something here to show user that form is being submitted 
-      fetch(event.target.action, { 
-        method: 'POST', 
+   script. 
+     document.forms['CakeForm'].addEventListener('submit', (event) => { 
+       event.preventDefault(); 
+       // TODO do something here to show user that form is being submitted 
+       fetch(event.target.action, { 
+         method: 'PUT', 
         body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
-      }).then((resp) => { 
-        return resp.json(); // or resp.text() or whatever the server sends 
-      }).then((body) => { 
-        alert("Save succeded") 
-        // TODO handle body 
-      }).catch((error) => { 
+       }).then((resp) => { 
+         return resp.json();  // resp.json();  or whatever the server sends 
+       }).then((body) => { 
+         alert("Update succeded") 
+         // TODO handle body 
+       }).catch((error) => { 
         // TODO handle error 
-        alert("Save failed " + error ) 
-      }); 
-    }); 
+         alert("Update failed " + error ) 
+       }); 
+     });

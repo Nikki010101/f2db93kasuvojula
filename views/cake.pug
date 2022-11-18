@@ -2,13 +2,14 @@ extends layout
 
 block content
   h1= title
-  - var results = results
-    div(class = 'container-fluid')
-        div(class = 'row')
-            each i, index in results 
-                div(class="col-sm-2",onClick=`buy(${index})`) Flavor : #{i["flavour"]} <br> Price : #{i["price"]} <br> Shape: #{i["shape"]}
-                script.
-                    function buy(val) {
-                        alert(`You purchased item ${val}`)
-                    }
-   
+  - let c = results
+  div(class="container-fluid")
+   div(class="row")
+    each item in c
+     - let destination = `dispatch(\"/cake/update?id=${item._id}\")`
+     div(class="row-sm-2", class="m-1") Item #{item.flavour}(#{item.price}) is #{item.shape}
+      button.btn( class="btn-primary ml-1", onclick= destination) Update
+  script.
+   function dispatch(path){
+    window.location.href=path
+   }
