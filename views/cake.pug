@@ -2,13 +2,19 @@ extends layout
 
 block content
   h1= title
+  - let create = `dispatch(\"/cake/create\")`
+  button.btn( class="btn-primary ml-1", onclick= create) Create
   - let c = results
   div(class="container-fluid")
    div(class="row")
     each item in c
      - let destination = `dispatch(\"/cake/update?id=${item._id}\")`
+     - let detail = `dispatch(\"/cake/detail?id=${item._id}\")` 
+     - let delet = `dispatch(\"/cake/delete?id=${item._id}\")`
      div(class="row-sm-2", class="m-1") Item #{item.flavour}(#{item.price}) is #{item.shape}
       button.btn( class="btn-primary ml-1", onclick= destination) Update
+      button.btn( class="btn-primary ml-1", onclick= detail) Detail
+      button.btn( class="btn-primary ml-1", onclick= delet) Delete
   script.
    function dispatch(path){
     window.location.href=path

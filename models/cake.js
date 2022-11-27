@@ -1,8 +1,14 @@
 const mongoose = require("mongoose") 
 const cakeSchema = mongoose.Schema({ 
- flavour: String,
+ flavour:{
+    type:String,
+    maxlength:13
+ } ,
  price: Number, 
- shape: String
+ shape:{
+    type:String,
+    minlength:3
+ }
  
 }) 
  

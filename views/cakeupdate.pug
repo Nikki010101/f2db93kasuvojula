@@ -6,24 +6,24 @@ block content
   if (toShow == null) 
     h2 No instance to update 
   else 
-   - let _id = toShow._id
+   - let id = toShow.id
    - let flavour = toShow.flavour
    - let price = toShow.price
    - let shape = toShow.shape
  
    div.row(class='mb-2') 
      div.mr-1 ID is 
-     div #{_id} 
-   - let actionid = "/resource/cake/" + _id
-   form(id='cakeForm', action=actionid, method="PUT") 
+     div #{id} 
+   - let actionid = "/resource/cake/" + id
+   form(id='CakeForm', action=actionid, method="PUT") 
      div.form-group 
-         label.cakeAttr(for='flavour') cake flavour 
+         label.cakeAttr(for='flavour') Cake flavour 
          input#flavour(type='text', name='flavour', value=flavour) 
      div.form-group 
-         label.cakeAttr(for='price') cake price 
+         label.cakeAttr(for='price') Cake price 
          input#price(type='number', name='price',value=price) 
      div.form-group 
-         label.cakeAttr(for='shape') cake shape
+         label.cakeAttr(for='shape') Cake shape
          input#shape(type='text', name='shape', value=shape) 
      input(type="submit") 
  

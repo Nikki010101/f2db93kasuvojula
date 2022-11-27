@@ -50,20 +50,16 @@ router.get('/login', function(req, res) {
 }); 
  
 router.post('/login', passport.authenticate('local'), function(req, res) { 
+    if(req.session.returnTo) 
+    res.redirect(req.session.returnTo); 
     res.redirect('/'); 
 }); 
  
-router.get('/logout', function(req, res) { 
-  const secured = (req, res, next) => { 
-    if (req.user){ 
-      return next(); 
-    } 
-    req.session.returnTo = req.originalUrl; 
-    res.redirect("/login"); 
-  } 
-   // req.logout(); 
-   // res.redirect('/'); 
-  
+router.get("/logout", (req, res) => { 
+  req.logout(req.user, err => {
+    if(err) return next(err);
+    res.redirect("/");
+  });
 }); 
  
 router.get('/ping', function(req, res){ 
